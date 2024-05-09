@@ -207,3 +207,28 @@ plt.title("Previsões")
 plt.tight_layout()
 plt.show()
 #%%
+from sklearn.decomposition import PCA
+from sklearn.datasets import load_iris
+#%%
+data = load_iris()
+#%%
+X = data.data
+#%%
+pca = PCA(n_components=2)
+pca.fit(X)
+#%%
+print(pca.explained_variance_ratio_)
+#%%
+import matplotlib.pyplot as plt
+
+# Variação explicada do PCA
+explained_variance_ratio = pca.explained_variance_ratio_
+
+# Criar o gráfico de barras
+plt.figure(figsize=(8, 6))
+plt.bar(range(len(explained_variance_ratio)), explained_variance_ratio)
+plt.xlabel('Componente Principal')
+plt.ylabel('Variação Explicada (%)')
+plt.title('Variação Explicada pelo PCA')
+plt.ylim(0, 1)
+plt.show()
