@@ -69,24 +69,25 @@ Random Forest
 from sklearn.datasets import load_iris
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.model_selection import train_test_split
 from scipy.stats import pearsonr
 import matplotlib.pyplot as plt
-
+#%%
 # Carregando o conjunto de dados Iris
 iris = load_iris()
 X = iris.data
 y = iris.target
-
+#%%
 # Dividindo os dados em treino e teste
-X_train, X_test, y_train, y_test = X[:100], X[100:], y[:100], y[100:]
-
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+#%%
 # Criando o modelo Random Forest
 clf = RandomForestClassifier(n_estimators=100, random_state=42)
 clf.fit(X_train, y_train)
-
+#%%
 # Prevendo as classes das amostras de teste
 y_pred = clf.predict(X_test)
-
+#%%
 # Avaliando o modelo
 cm = confusion_matrix(y_test, y_pred)
 print("Matriz de confusão:")
@@ -94,12 +95,12 @@ print(cm)
 print("\nRelatório de classificação:")
 report = classification_report(y_test, y_pred, zero_division=1)
 print(report)
-
+#%%
 # Calculando o coeficiente de correlação e o p-valor
 correlation, p_value = pearsonr(y_test, y_pred)
 print("Coeficiente de correlação:", correlation)
 print("p-valor:", p_value)
-
+#%%
 # Plotando os dados
 plt.figure(figsize=(10, 6))
 plt.scatter(X_test[:, 0], X_test[:, 1], c=y_test, cmap='viridis', edgecolors='k', s=50)
